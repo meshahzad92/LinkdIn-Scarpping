@@ -8,17 +8,26 @@ from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
+
 import re
 import csv
 
-def start_browser():
+
+def start_browser_Helper(proxy=None):
     '''
     Initializes the WebDriver in headless mode and returns the driver instance.
     '''
     options = Options()
-    # options.add_argument("--headless")  
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    if proxy:
+            options.add_argument(f'--proxy-server={proxy}')
     driver = webdriver.Edge(options=options)
     return driver
+
+
+
 
 def open_page(driver ,link):
     '''
@@ -79,7 +88,7 @@ def get_data(driver, xpath):
         print(f"An error occurred while extracting the text: {e}")
         return None
 
-def login(driver, email, password, login_page_link="https://www.linkedin.com/login"):
+def login_Helper(driver, email, password, login_page_link="https://www.linkedin.com/login"):
     '''
     Logs in to the LinkedIn account.
     '''

@@ -7,16 +7,39 @@ reload(functions)
 
 from Files.constants import *
 from Files.functions import *
+import time
+import re
+import random
+
+driver = None
 
 
-def scrape_linkedin_profile(profile_url, my_email, password):
+def login(driver, email, password):
+    login_Helper(driver, email, password)
 
-    driver = start_browser() 
+
+def start_browser(proxy=None):
+    global driver
+    if driver is None:
+        driver = start_browser_Helper(proxy)
+    return driver
+
+
+def close_browser():
+    global driver
+    if driver:
+        driver.quit()
+        driver = None
+
+def scrape_linkedin_profile(profile_url):
+    global driver
+    if not driver:
+        raise Exception("Browser session not started. Please log in first.")
+
+    open_page(driver, profile_url)
 
     try:
-        login(driver, email=my_email, password=password)
-        open_page(driver, profile_url)
-        # Namr
+        # Name
         xpath = "/html/body/div[6]/div[3]/div/div/div[2]/div/div/main/section[1]/div[2]/div[2]/div[1]/div[1]/span[1]/a/h1"
         name = get_data(driver, xpath)
         # Number of followers 
@@ -42,9 +65,12 @@ def scrape_linkedin_profile(profile_url, my_email, password):
         experience_list = get_experience(driver,profile_url)
         # Skills
         skills_list = get_skills(driver, profile_url)
-        driver.quit()
 
-        return {
+        # Random delay to mimic human activity
+        delay = random.randint(10, 30)
+        print(f"Pausing for {delay} seconds...")
+        time.sleep(delay)
+        return {    
             "name": name,
             "followers": followers,
             "email": email,
