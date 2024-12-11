@@ -1,7 +1,8 @@
 import json
 from flask import Flask, request, jsonify
 from scrap import start_browser, close_browser, login, scrape_linkedin_profile
-
+import random
+from proxylist import proxy
 app = Flask(__name__)
 
 @app.route('/')
@@ -18,6 +19,9 @@ def login_endpoint():
         return jsonify({"error": "Email and password are required."}), 400
 
     try:
+        index = random.randint(0, len(proxy) - 1)
+        print('\n\nUsing proxy:', proxy[index])
+        print('\n\n')
         driver = start_browser()
         login(driver, email, password)
         return jsonify({"message": "Logged in successfully!"}), 200
@@ -43,11 +47,10 @@ def scrape_endpoint():
         except Exception as e:
             errors.append({"profile_url": profile_url, "error": str(e)})
 
-        # Rate limit to avoid detection
         if i % 10 == 0:
             print("Pausing for 30 seconds to avoid rate limits...")
             import time
-            time.sleep(30)  # Pause every 10 profiles
+            time.sleep(5)  
 
     return jsonify({
         "scraped_profiles": scraped_profiles,

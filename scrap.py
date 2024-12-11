@@ -1,6 +1,6 @@
 from importlib import reload
 from Files import constants, functions  # Import modules
-
+from  proxylist import proxy
 # Reload modules
 reload(constants)
 reload(functions)
@@ -67,7 +67,7 @@ def scrape_linkedin_profile(profile_url):
         skills_list = get_skills(driver, profile_url)
 
         # Random delay to mimic human activity
-        delay = random.randint(10, 30)
+        delay = random.randint(10, 20)
         print(f"Pausing for {delay} seconds...")
         time.sleep(delay)
         return {    
