@@ -40,12 +40,15 @@ def scrape_linkedin_profile(profile_url):
 
     try:
         # Name
-        xpath = "/html/body/div[6]/div[3]/div/div/div[2]/div/div/main/section[1]/div[2]/div[2]/div[1]/div[1]/span[1]/a/h1"
+        
+        xpath = '/html/body/div[5]/div[3]/div/div/div[2]/div/div/main/section[1]/div[2]/div[2]/div[1]/div[1]/span[1]/a/h1'
         name = get_data(driver, xpath)
         # Number of followers 
         section = get_Followers_section(driver)
         followers_uncleaned = get_Followers(driver, section)
-        followers = int(re.sub(r'\D', '', followers_uncleaned[0]))
+        followers = None
+        if len(followers_uncleaned) >=1:
+            followers = int(re.sub(r'\D', '', followers_uncleaned[0]))
         # Bio
         xpath = '/html/body/div[6]/div[3]/div/div/div[2]/div/div/main/section[1]/div[2]/div[2]/div[1]/div[2]'
         bio = get_data(driver, xpath)
@@ -83,5 +86,5 @@ def scrape_linkedin_profile(profile_url):
 
 
     except Exception as e:
-        driver.quit()
+        # driver.quit()
         raise e

@@ -155,8 +155,8 @@ def remove_redundant_info(input_data):
 
 def get_experience(driver,profile):
     driver.get(profile+"/details/experience/")                               
-    wait_for_page_load(driver, timeout=20, unique_element=(By.CLASS_NAME, "VcfWtteOjwrkCZnXQzzxBwAnJxBIDECsnqgUVQ"))
-    ul_element = driver.find_element(By.CLASS_NAME, "VcfWtteOjwrkCZnXQzzxBwAnJxBIDECsnqgUVQ")
+    wait_for_page_load(driver, timeout=20, unique_element=(By.CLASS_NAME, "VcfWtteOjwrkCZnXQzzxBwAnJxBIDECsnqgUVQ "))
+    ul_element = driver.find_element(By.CLASS_NAME, "VcfWtteOjwrkCZnXQzzxBwAnJxBIDECsnqgUVQ ")
 
     job_details = {}
 
@@ -233,8 +233,8 @@ def get_Followers(driver, section):
 
 def get_skills(driver,profile):
     driver.get(profile+"/details/skills")                               
-    wait_for_page_load(driver, timeout=20, unique_element=(By.CLASS_NAME, "VcfWtteOjwrkCZnXQzzxBwAnJxBIDECsnqgUVQ"))
-    ul_element = driver.find_element(By.CLASS_NAME, "VcfWtteOjwrkCZnXQzzxBwAnJxBIDECsnqgUVQ")
+    wait_for_page_load(driver, timeout=20, unique_element=(By.CLASS_NAME, "VcfWtteOjwrkCZnXQzzxBwAnJxBIDECsnqgUVQ "))
+    ul_element = driver.find_element(By.CLASS_NAME, "VcfWtteOjwrkCZnXQzzxBwAnJxBIDECsnqgUVQ ")
 
     job_details = {}
 

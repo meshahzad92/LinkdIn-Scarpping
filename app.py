@@ -3,11 +3,13 @@ from flask import Flask, request, jsonify
 from scrap import start_browser, close_browser, login, scrape_linkedin_profile
 import random
 from proxylist import proxy
+from Files.functions import start_browser_Helper
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     return "Hello, the server is up and running!"
+
 
 @app.route('/login', methods=['POST'])
 def login_endpoint():
@@ -34,8 +36,8 @@ def scrape_endpoint():
     data = request.get_json()
     profile_urls = data.get('profile_urls')
 
-    if not profile_urls or not isinstance(profile_urls, list):
-        return jsonify({"error": "A list of profile URLs is required"}), 400
+    if not all([profile_urls]):
+        return jsonify({"error": "profile_urls required"}), 400
 
     scraped_profiles = []
     errors = []
